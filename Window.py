@@ -44,7 +44,7 @@ class BaseWindow:
         curr_question = self.questions.pick_question()
         image_filepath = 'Questions/' +curr_question+'.PNG'
 
-        img = Image.open("Questions\Q1.PNG")
+        img = Image.open(image_filepath)
         question_pic = ImageTk.PhotoImage(img)
 
         label1 = Label(self.question_frame, image=question_pic)
