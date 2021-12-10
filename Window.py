@@ -25,8 +25,25 @@ class BaseWindow:
         self.choice_frame = Frame(self.tk)
         self.choice_frame.grid(row=2, column=0)
 
+        #Options
+        self.choice = StringVar()
+        self.choice_a = Radiobutton(self.choice_frame, text="A", variable=self.choice, value="a")
+        self.choice_a.pack()
+        self.choice_b = Radiobutton(self.choice_frame, text="B", variable=self.choice, value="b")
+        self.choice_b.pack()
+        self.choice_c = Radiobutton(self.choice_frame, text="C", variable=self.choice, value="c")
+        self.choice_c.pack()
+        self.choice_d = Radiobutton(self.choice_frame, text="D", variable=self.choice, value="d")
+        self.choice_d.pack()
+        self.choice_e = Radiobutton(self.choice_frame, text="E", variable=self.choice, value="e")
+        self.choice_e.pack()
+        self.choices_list = [self.choice_a, self.choice_b, self.choice_c, self.choice_d, self.choice_e]
+        #self.clear_choices()
         # Puts the image on the screen
         self.display_question()
+
+        self.submit_button = Button(self.choice_frame, text="Submit", command=self.check_answer)
+        self.submit_button.pack()
 
         print(self.questions.q_list)
         print(self.questions.q_map)
@@ -40,9 +57,13 @@ class BaseWindow:
         # Closes the script
         sys.exit()
 
+    def clear_choices(self):
+        for x in self.choices_list:
+            x.deselect()
+
     def display_question(self):
-        curr_question = self.questions.pick_question()
-        image_filepath = 'Questions/' +curr_question+'.PNG'
+        self.curr_question = self.questions.pick_question()
+        image_filepath = 'Questions/' +self.curr_question+'.PNG'
 
         img = Image.open(image_filepath)
         question_pic = ImageTk.PhotoImage(img)
@@ -50,6 +71,12 @@ class BaseWindow:
         label1 = Label(self.question_frame, image=question_pic)
         label1.image = question_pic
         label1.pack()
+
+    def check_answer(self):
+        if self.questions.q_map[self.curr_question] == self.choice:
+            print('good job',self.questions.q_map[self.curr_question],self.choice)
+        else:
+            print('idiot',self.questions.q_map[self.curr_question],self.choice)
 
     def display_answer(self):
         img = Image.open("Questions\Q1key.PNG")
